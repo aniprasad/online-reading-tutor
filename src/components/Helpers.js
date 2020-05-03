@@ -154,8 +154,16 @@ export const alertBadgeAcquired = (badgeDesc) => {
 };
 
 // Renders all "World" badges
-export const renderWorldBadges = (world_props) => {
+// If onlyAcquired is set to true, only return those badges
+// which have been acquired
+export const renderWorldBadges = (world_props, onlyAcquired = false) => {
   let WorldTags = [];
+  // Filter
+  if(onlyAcquired) {
+    world_props = world_props.filter(function (key) {
+      return key.badgeState == true;
+    });
+  }
   for (let i = 0; i < world_props.length; i++) {
     WorldTags.push(
       <Image
@@ -470,4 +478,9 @@ export const checkAndIssueWorldBadge = () => {
 export const setCurrentLessonParentWorld = (worldNameForLesson) => {
   // Set the current lesson's parent here
   Constants.CURRENT_LESSON_PARENT = worldNameForLesson;
+}
+
+// return the user name
+export const getUserName = () => {
+  return DataObject.Data.name;
 }
